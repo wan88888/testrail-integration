@@ -1,0 +1,14 @@
+{
+  "name": "playwright-testrail-sample",
+  "version": "1.0.0",
+  "description": "Playwright sample project with TestRail integration",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}
+

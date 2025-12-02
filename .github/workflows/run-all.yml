@@ -1,0 +1,296 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '*'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+name: Run all frameworks
+
+env:
+  TESTRAIL_USER: trcli@testrail.com
+  TESTRAIL_URL: https://testrailsademo.testrail.io/
+  PROJECT_NAME: SA - (DO NOT DELETE) TRCLI-Automation-Frameworks
+
+jobs:
+
+  cypress:
+    name: Cypress
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIR: samples/javascript/cypress
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Execute Cypress tests
+        continue-on-error: true
+        uses: cypress-io/github-action@v5.3.0
+        with:
+          working-directory: ${{ env.WORKING_DIR }}
+          command: npx cypress run --reporter junit --reporter-options mochaFile=reports/junit-[hash].xml
+      - name: Setup Python
+        uses: actions/setup-python@v4.5.0
+        with:
+          python-version: '3.x'
+      - name: Execute TestRail CLI to upload results
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          pip install trcli
+          trcli -y \
+            -h ${{ env.TESTRAIL_URL }} \
+            --project "${{ env.PROJECT_NAME }}" \
+            -u ${{ env.TESTRAIL_USER }} \
+            -p "${{ secrets.TESTRAIL_USER_PW }}" \
+            parse_junit \
+            -f "reports/junit*.xml" \
+            --section-id "40" \
+            --title "Cypress automated tests" \
+            --run-description "GitHub workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  playwright:
+    name: Playwright
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIR: samples/javascript/playwright
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Execute playwright tests
+        continue-on-error: true
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          npm install
+          npx playwright test
+      - name: Setup Python
+        uses: actions/setup-python@v4.5.0
+        with:
+          python-version: '3.x'
+      - name: Execute TestRail CLI to upload results
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          pip install trcli
+          trcli -y \
+            -h ${{ env.TESTRAIL_URL }} \
+            --project "${{ env.PROJECT_NAME }}" \
+            -u ${{ env.TESTRAIL_USER }} \
+            -p "${{ secrets.TESTRAIL_USER_PW }}" \
+            parse_junit \
+            -f "test-results/junit-report.xml" \
+            --section-id "41" \
+            --title "Playwright automated tests" \
+            --run-description "GitHub workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  junit5_selenium:
+    name: JUnit5 Selenium
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIR: samples/java/junit5-selenium
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: 'Set up JDK 8'
+        uses: actions/setup-java@v3
+        with:
+          java-version: 8
+          distribution: temurin
+      - name: Setup chrome
+        uses: browser-actions/setup-chrome@latest
+      - name: Execute tests
+        working-directory: ${{ env.WORKING_DIR }}
+        continue-on-error: true
+        run: mvn clean compile test
+      - name: Execute TestRail CLI to upload results
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          pip install trcli
+          trcli -y \
+            -h ${{ env.TESTRAIL_URL }} \
+            --project "${{ env.PROJECT_NAME }}" \
+            -u ${{ env.TESTRAIL_USER }} \
+            -p "${{ secrets.TESTRAIL_USER_PW }}" \
+            parse_junit \
+            -f "target/TEST-junit-jupiter.xml" \
+            --section-id "42" \
+            --title "JUnit5 selenium automated tests" \
+            --run-description "GitHub workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  junit5:
+    name: JUnit5
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIR: samples/java/junit5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: 'Set up JDK 8'
+        uses: actions/setup-java@v3
+        with:
+          java-version: 8
+          distribution: temurin
+      - name: Execute tests
+        working-directory: ${{ env.WORKING_DIR }}
+        continue-on-error: true
+        run: mvn clean compile test
+      - name: Execute TestRail CLI to upload results
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          pip install trcli
+          trcli -y \
+            -h ${{ env.TESTRAIL_URL }} \
+            --project "${{ env.PROJECT_NAME }}" \
+            -u ${{ env.TESTRAIL_USER }} \
+            -p "${{ secrets.TESTRAIL_USER_PW }}" \
+            parse_junit \
+            -f "target/TEST-junit-jupiter.xml" \
+            --section-id "43" \
+            --title "JUnit5 automated tests" \
+            --run-description "GitHub workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  testng:
+    name: TestNG
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIR: samples/java/testng
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: 'Set up JDK 8'
+        uses: actions/setup-java@v3
+        with:
+          java-version: 8
+          distribution: temurin
+      - name: Execute tests
+        working-directory: ${{ env.WORKING_DIR }}
+        continue-on-error: true
+        run: mvn clean compile test
+      - name: Execute TestRail CLI to upload results
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          pip install trcli
+          trcli -y \
+            -h ${{ env.TESTRAIL_URL }} \
+            --project "${{ env.PROJECT_NAME }}" \
+            -u ${{ env.TESTRAIL_USER }} \
+            -p "${{ secrets.TESTRAIL_USER_PW }}" \
+            parse_junit \
+            -f "reports/TEST-TestSuite.xml" \
+            --section-id "44" \
+            --title "TestNG automated tests" \
+            --run-description "GitHub workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  pytest:
+    name: Pytest
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIR: samples/python/pytest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4.5.0
+        with:
+          python-version: '3.x'
+      - name: Execute Pytest tests
+        working-directory: ${{ env.WORKING_DIR }}
+        continue-on-error: true
+        run: |
+          pip install -r requirements.txt
+          pytest --junitxml "reports/junit-report.xml" "./tests"
+      - name: Execute TestRail CLI to upload results
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          pip install trcli
+          trcli -y \
+            -h ${{ env.TESTRAIL_URL }} \
+            --project "${{ env.PROJECT_NAME }}" \
+            -u ${{ env.TESTRAIL_USER }} \
+            -p "${{ secrets.TESTRAIL_USER_PW }}" \
+            parse_junit \
+            -f "reports/junit-report.xml" \
+            --section-id "45" \
+            --title "Pytest automated tests" \
+            --run-description ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+  robotframework_selenium:
+    name: RobotFramework Selenium
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIR: samples/robotframework/robotframework-selenium
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4.5.0
+        with:
+          python-version: '3.x'
+      - name: Setup chrome
+        uses: browser-actions/setup-chrome@latest
+      - name: Chrome version check
+        run: chrome --version
+      - name: Execute Robot Framework tests
+        working-directory: ${{ env.WORKING_DIR }}
+        continue-on-error: true
+        run: |
+          pip install -r requirements.txt
+          robot -d reports "./tests"
+      - name: Execute TestRail CLI to upload results
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          pip install trcli
+          trcli -y \
+            -h ${{ env.TESTRAIL_URL }} \
+            --project "${{ env.PROJECT_NAME }}" \
+            -u ${{ env.TESTRAIL_USER }} \
+            -p "${{ secrets.TESTRAIL_USER_PW }}" \
+            parse_robot \
+            -f "reports/output.xml" \
+            --section-id "46" \
+            --title "Robot Framework automated tests" \
+            --run-description "GitHub workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  nunit:
+    name: NUnit
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIR: samples/dotnet/nunit
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup .NET Core SDK 6.0.x
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: install mono
+        run: |
+          sudo apt-get install mono-devel --allow-unauthenticated --yes
+      - name: Install project
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          dotnet build
+          dotnet restore
+          # dotnet list SimpleTestProject.sln package
+      - name: Execute tests
+        working-directory: ${{ env.WORKING_DIR }}
+        continue-on-error: true
+        run: |
+          mono ./NuGet/nunit.consolerunner/3.16.3/tools/nunit3-console.exe SimpleTestProject/bin/Debug/net6.0/SimpleTestProject.dll \
+            --result "reports/junit-report.xml;transform=SimpleTestProject/nunit3-junit.xslt" \
+            --trace off
+      - name: Execute TestRail CLI to upload results
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          pip install trcli
+          trcli -y \
+            -h ${{ env.TESTRAIL_URL }} \
+            --project "${{ env.PROJECT_NAME }}" \
+            -u ${{ env.TESTRAIL_USER }} \
+            -p "${{ secrets.TESTRAIL_USER_PW }}" \
+            parse_junit \
+            -f "reports/junit-report.xml" \
+            --section-id "46" \
+            --title "NUnit automated tests" \
+            --run-description "GitHub workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

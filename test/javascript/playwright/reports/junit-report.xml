@@ -1,0 +1,22 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="4.621742">
+<testsuite name="sauce-login.spec.js" timestamp="2025-12-02T07:13:58.003Z" hostname="" tests="1" failures="0" skipped="0" time="3.918" errors="0">
+<testcase name="SauceDemo Login › should login successfully with valid credentials" classname="sauce-login.spec.js" time="3.918">
+<properties>
+<property name="testrail_case_field" value="refs:TR-100">
+</property>
+<property name="testrail_case_field" value="priority_id:1">
+</property>
+<property name="testrail_result_comment" value="1. Verify login page is displayed">
+</property>
+<property name="testrail_result_comment" value="2. Enter valid username">
+</property>
+<property name="testrail_result_comment" value="3. Enter valid password">
+</property>
+<property name="testrail_result_comment" value="4. Click login button">
+</property>
+<property name="testrail_result_comment" value="5. Verify successful login - redirected to inventory page">
+</property>
+</properties>
+</testcase>
+</testsuite>
+</testsuites>
