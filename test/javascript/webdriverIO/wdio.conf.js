@@ -29,15 +29,15 @@ export const config = {
 
     reporters: [
         ['junit', {
-            outputDir: './results',
+            outputDir: './reports',
             outputFileFormat: function () {
-                return `webdriverIO-test-results.xml`
+                return `webdriverio-test.xml`
             }
         }]
     ],
 
     cucumberOpts: {
-        require: ['./features/step-definitions/steps.js'],
+        require: ['./features/steps/steps.js'],
         backtrace: false,
         requireModule: [],
         dryRun: false,

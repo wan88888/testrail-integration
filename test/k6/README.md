@@ -21,7 +21,7 @@ k6 run jsonplaceholder-test.js
 ## 上传结果到 TestRail
 
 ```sh
-trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml" --case-matcher "name"
+trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml"
 ```
 
 ## 测试用例命名规范

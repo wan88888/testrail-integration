@@ -20,7 +20,9 @@ pip install trcli
 # Run Tests
 jmeter -n -t ././././jmeter_performance_test.jmx
 
+jmeter -n -t test.jmx -l results.xml
+
 # Upload JMeter Test Results to TestRail
-trcli -y -c "trcli-config.yml" parse_junit -f "sample_result.xml" --title "JMeter Demo"
+ttrcli -y -c "trcli-config.yml" parse_junit -f "reports/results.xml"
 
 ```

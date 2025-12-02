@@ -20,5 +20,5 @@ npm install
 npx wdio run wdio.conf.js
 
 # Upload test results
-trcli -y -c "trcli-config.yml" parse_junit -f "results/test-results.xml" --title "Automation Example - WebdriverIO"
+trcli -y -c "trcli-config.yml" parse_junit -f "reports/webdriverio-test.xml"
 ```

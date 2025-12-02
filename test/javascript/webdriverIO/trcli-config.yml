@@ -1,5 +1,5 @@
-host: <HOLDER>
-project: <HOLDER>
-username: <HOLDER>
-password: <HOLDER>
-run-description: <HOLDER>
+host: https://wluffy.testrail.io
+project: test1
+username: wanyuan@atlasv.com
+password: Wan273479@
+title: WebdriverIO Automated Test Run
