@@ -1,7 +1,8 @@
 @REQ_LOGIN-9345
-Feature: Selenium BDD Demo
+Feature: SauceDemo Login
 
-  Scenario: Verify TestRail Website Navigation
-    Given I navigate to the testrail website
-    When I validate the page is loaded
-    Then the testrail request demo button is present
+  Scenario: Verify successful login with valid credentials
+    Given I navigate to the saucedemo website
+    When I enter username "standard_user" and password "secret_sauce"
+    And I click the login button
+    Then I should be redirected to the products page

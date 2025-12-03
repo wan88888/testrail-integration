@@ -23,6 +23,6 @@ mvn clean compile
 mvn clean compile test
 
 # Upload test results
-trcli -y -c "trcli-config.yml" parse_junit -f "./reports/TEST-TestSuite.xml"
+trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml"
 
 ```

@@ -7,19 +7,24 @@
       </elementProp>
     </TestPlan>
     <hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group">
-        <intProp name="ThreadGroup.num_threads">1</intProp>
-        <intProp name="ThreadGroup.ramp_time">1</intProp>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group - API Performance Test">
+        <intProp name="ThreadGroup.num_threads">10</intProp>
+        <intProp name="ThreadGroup.ramp_time">5</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">30</stringProp>
+        <stringProp name="ThreadGroup.delay">0</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">-1</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
-          <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET /users - List all users">
+          <stringProp name="HTTPSampler.domain">jsonplaceholder.typicode.com</stringProp>
+          <stringProp name="HTTPSampler.path">/users</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -30,11 +35,11 @@
         </HTTPSamplerProxy>
         <hashTree/>
         <nz.co.breakpoint.jmeter.JUnitReporter guiclass="TestBeanGUI" testclass="nz.co.breakpoint.jmeter.JUnitReporter" testname="JUnit Reporter_ TRintegration">
-          <stringProp name="filename">C:/Program Files/apache-jmeter-5.6.3/bin/samples/sample_results.xml</stringProp>
+          <stringProp name="filename">reports/junit-results.xml</stringProp>
           <collectionProp name="kpis">
-            <elementProp name="Average less than 100ms" elementType="nz.co.breakpoint.jmeter.KPI" testname="Average less than 100ms">
+            <elementProp name="Average response time less than 500ms" elementType="nz.co.breakpoint.jmeter.KPI" testname="Average response time less than 500ms">
               <stringProp name="metric">MEAN</stringProp>
-              <stringProp name="threshold">1000</stringProp>
+              <stringProp name="threshold">500</stringProp>
             </elementProp>
             <elementProp name="Not more than 1% sample error" elementType="nz.co.breakpoint.jmeter.KPI" testname="Not more than 1% sample error">
               <stringProp name="metric">ERRORS</stringProp>

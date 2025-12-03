@@ -1,5 +1,5 @@
-host: https://INSTANCE-NAME.testrail.io
-project: PROJECT NAME
-username: USERNAME
-password: PASSWORD
+host: https://wluffy.testrail.io
+project: test1
+username: wanyuan@atlasv.com
+password: Wan273479@
 title: TestNG Selenium Automated Test Run

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="4.828">
+    <testcase classname="SauceDemo Login" name="Verify successful login with valid credentials" time="4.778">
+        <system-out><![CDATA[Given I navigate to the saucedemo website...................................passed
+When I enter username "standard_user" and password "secret_sauce"...........passed
+And I click the login button................................................passed
+Then I should be redirected to the products page............................passed
+]]></system-out>
+    </testcase>
+</testsuite>

@@ -1,4 +1,4 @@
-# NUnit sample project
+# NUnit SauceDemo Login Test Project
 
 ## How to use the project
 
@@ -13,8 +13,12 @@ pip install trcli
 dotnet restore
 dotnet build
 
+# Install Playwright browsers
+pwsh SauceTest/bin/Debug/net8.0/playwright.ps1 install
+# Or use: npx playwright install
+
 # Run tests
-./NuGet/nunit.consolerunner/3.16.3/tools/nunit3-console SimpleTestProject/bin/Debug/net6.0/SimpleTestProject.dll --trace off --result "reports/junit-report.xml;transform=SimpleTestProject/nunit3-junit.xslt"
+dotnet test --logger "junit;LogFilePath=$(pwd)/reports/junit-report.xml"
 
 # Upload test results
 trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml"

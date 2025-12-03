@@ -1,1 +1,34 @@
-/.DS_Store
+# ===== 操作系统 =====
+.DS_Store
+Thumbs.db
+
+# ===== IDE/编辑器 =====
+.idea/
+.vs/
+.vscode/
+*.iml
+*.suo
+*.user
+
+# ===== Java =====
+target/
+
+# ===== JavaScript/Node.js =====
+node_modules/
+
+# ===== Python =====
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# ===== .NET =====
+bin/
+obj/
+NuGet/
+
+# ===== 日志 =====
+*.log
+jmeter.log

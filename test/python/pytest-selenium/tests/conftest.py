@@ -18,7 +18,7 @@ def browser_driver(request, record_property):
 
 
 def setup_driver():
-    """Creates webdriver for Chrome and opens the TestRail website"""
+    """Creates webdriver for Chrome and opens the SauceDemo website"""
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--headless")
@@ -27,7 +27,7 @@ def setup_driver():
     driver.implicitly_wait(3)
     driver.set_page_load_timeout(10)
     driver.set_window_size(1920, 1080)
-    driver.get("https://www.testrail.com/")
+    driver.get("https://www.saucedemo.com/")
     driver.maximize_window()
     return driver
 

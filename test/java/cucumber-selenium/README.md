@@ -24,6 +24,6 @@ mvn clean compile
 mvn clean compile test
 
 # Upload test results to Testrail
-trcli -y -c "trcli-config.yml" parse_junit -f "./target/cucumber-results.xml"
+trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml"
 
 ```

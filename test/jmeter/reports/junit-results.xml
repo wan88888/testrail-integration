@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0"
+           failures="1"
+           name="JUnit Reporter_ TRintegration"
+           skipped="0"
+           tests="2">
+   <testcase classname="Average less than 100ms" name="MEAN(.*) &lt; 1000">
+      <failure message="">Actual value 1475.000000 exceeds threshold 1000.000000 for samples matching " .*"</failure>
+   </testcase>
+   <testcase classname="Not more than 1% sample error" name="ERRORS(.*) &lt;= .01"/>
+</testsuite>

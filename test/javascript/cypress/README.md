@@ -16,11 +16,10 @@ pip install trcli
 npm install
 
 # Run tests
-npx cypress run --reporter junit --reporter-options "mochaFile=reports/junit-[hash].xml"
-
+npx cypress run
 
 # Upload test results
 # With TestRail CLI version 1.6.0, the report path now supports wildcards, allowing you to merge multiple reports seamlessly.
 
-trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit*.xml"
+trcli -y -c "trcli-config.yml" parse_junit -f "reports/*.xml"
 ```

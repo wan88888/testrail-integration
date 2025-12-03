@@ -3,7 +3,7 @@
 <suite name="TestRail suite"  parallel="none"  >
     <test name="TestRail Tests" >
         <classes>
-            <class name ="com.idera.testrail.tests.HomePageTest" ></class>
+            <class name ="demo.HomePageTest" ></class>
         </classes>
     </test>
 </suite>
