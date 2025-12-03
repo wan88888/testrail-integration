@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<testsuites><testsuite name="k6" tests="5">
-<testcase name="Posts API &gt; C1 - status is 200"></testcase>
-<testcase name="Posts API &gt; C2 - response &lt; 2s"></testcase>
-<testcase name="Users API &gt; C3 - status is 200"></testcase>
-<testcase name="Users API &gt; C4 - has 10 users"></testcase>
-<testcase name="Comments API &gt; C5 - status is 200"></testcase>
-</testsuite></testsuites>
