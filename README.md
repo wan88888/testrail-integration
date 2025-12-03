@@ -88,4 +88,3 @@ trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml"
 
 - [TestRail CLI 官方文档](https://support.testrail.com/hc/en-us/articles/7146548750868-Introduction-to-the-TestRail-CLI)
 - [TestRail API 文档](https://support.testrail.com/hc/en-us/articles/7077039051284-Accessing-the-TestRail-API)
-- [代码优先工作流说明](https://support.testrail.com/hc/en-us/articles/12609674354068-Code-first-workflow)
