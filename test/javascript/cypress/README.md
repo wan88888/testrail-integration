@@ -17,7 +17,7 @@ npx cypress run
 
 # 上传测试结果到 TestRail
 # TestRail CLI 1.6.0 版本支持通配符路径，可以无缝合并多个报告
-trcli -y -c "../../trcli-config.yml" parse_junit \
+trcli -y -c "../../../trcli-config.local.yml" parse_junit \
   --title "Cypress Automated Test Run" \
   -f "reports/*.xml"
 ```

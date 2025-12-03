@@ -20,7 +20,7 @@ pipx install trcli
 newman run api-test.json -r cli,junit --reporter-junit-export ./reports/newman_junit.xml
 
 # 上传测试结果到 TestRail
-trcli -y -c "../../trcli-config.yml" parse_junit \
+trcli -y -c "../../../trcli-config.local.yml" parse_junit \
   --title "Postman Automated Test Run" \
   -f "reports/newman_junit.xml"
 ```

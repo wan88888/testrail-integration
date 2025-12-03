@@ -22,7 +22,7 @@ mvn clean compile
 mvn clean compile test
 
 # 上传测试结果到 TestRail
-trcli -y -c "../../trcli-config.yml" parse_junit \
+trcli -y -c "../../../trcli-config.local.yml" parse_junit \
   --title "TestNG Selenium Automated Test Run" \
   -f "reports/junit-report.xml"
 ```

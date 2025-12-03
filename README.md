@@ -6,8 +6,12 @@
 
 ```
 testrail-integration/
-├── trcli-config.yml            # 统一的 TestRail CLI 配置文件
-├── .env.example                # 环境变量示例
+├── trcli-config.example.yml    # TestRail CLI 配置文件模板
+├── trcli-config.yml            # 本地配置文件（需创建，已被 gitignore）
+├── scripts/
+│   ├── collect-reports.sh      # 收集所有子项目报告到根目录
+│   └── upload-reports.sh       # 批量上传所有报告到 TestRail
+├── reports/                    # 收集后的报告目录（按项目分类）
 └── test/
     ├── python/                 # Python 测试框架
     │   └── pytest-selenium/    # Pytest + Selenium
@@ -47,30 +51,24 @@ pipx install trcli
 
 ### 2. 配置 TestRail 连接
 
-1. 复制环境变量示例文件：
+1. 复制配置文件模板：
 
 ```sh
-cp .env.example .env
+cp trcli-config.example.yml trcli-config.yml
 ```
 
-2. 编辑 `.env` 文件，填写你的 TestRail 实例信息：
+2. 编辑 `trcli-config.yml`，填写你的 TestRail 实例信息：
 
-```sh
-TESTRAIL_HOST=https://your-instance.testrail.io
-TESTRAIL_PROJECT=Your Project Name
-TESTRAIL_USERNAME=your-email
-TESTRAIL_PASSWORD=your-password
+```yaml
+host: https://your-instance.testrail.io
+project: Your Project Name
+username: your-email@example.com
+password: your-password-or-api-key
 ```
 
-3. 加载环境变量：
-
-```sh
-source .env
-# 或者使用 export 逐个设置
-export TESTRAIL_HOST=https://your-instance.testrail.io
-```
-
-> **提示**：可以使用密码或 API Key（在 TestRail 中通过 "My Settings" > "API Keys" 获取）
+> **提示**：`password` 可以使用密码或 API Key（在 TestRail 中通过 "My Settings" > "API Keys" 获取）
+> 
+> **安全**：`trcli-config.yml` 已被 `.gitignore` 忽略，不会提交到版本控制
 
 ### 3. 选择示例项目
 
@@ -93,20 +91,34 @@ export TESTRAIL_HOST=https://your-instance.testrail.io
 
 ## 通用工作流
 
-无论使用哪种测试框架，基本工作流都是：
+### 上传测试报告（推荐）
+
+使用 `-c` 参数指定配置文件的绝对路径，可以在**任意子项目目录**下执行上传命令，无需在每个子项目中复制配置文件：
 
 ```sh
-# 1. 确保环境变量已配置
-source .env
-
-# 2. 运行测试并生成 JUnit XML 报告
-<运行测试的命令>
-
-# 3. 使用 trcli 上传结果到 TestRail
-trcli -y -c "trcli-config.yml" parse_junit \
-  --title "Your Test Run Title" \
+# 在任意子项目目录下执行（例如在 test/java/junit5-selenium 目录）
+trcli -y -c "/path/to/testrail-integration/trcli-config.yml" parse_junit \
+  --title "JUnit5 Test Run" \
   -f "reports/junit-report.xml"
 ```
+
+**示例**：
+
+```sh
+# 在 playwright 子项目中上传报告
+cd test/javascript/playwright
+trcli -y -c "/Users/wan/Cursor/testrail-integration/trcli-config.yml" parse_junit \
+  --title "Playwright Tests" \
+  -f "reports/junit-report.xml"
+
+# 在 pytest 子项目中上传报告
+cd test/python/pytest-selenium
+trcli -y -c "/Users/wan/Cursor/testrail-integration/trcli-config.yml" parse_junit \
+  --title "Pytest Tests" \
+  -f "reports/junit-report.xml"
+```
+
+> **优势**：只需维护根目录下的一份 `trcli-config.yml` 配置文件，所有子项目共享使用
 
 ## 相关资源
 

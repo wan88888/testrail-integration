@@ -36,6 +36,7 @@ jmeter.log
 # ===== 敏感配置文件 =====
 .env
 .env.local
+trcli-config.yml
 
 # ===== 测试报告 =====
 reports/

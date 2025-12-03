@@ -18,7 +18,7 @@ pipx install trcli
 jmeter -n -t test.jmx
 
 # 上传测试结果到 TestRail
-trcli -y -c "../trcli-config.yml" parse_junit \
+trcli -y -c "../../trcli-config.local.yml" parse_junit \
   --title "JMeter Performance Test Run" \
   -f "reports/junit-results.xml"
 ```

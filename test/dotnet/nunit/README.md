@@ -20,7 +20,7 @@ cd /Users/wan/Cursor/testrail-integration/test/dotnet/nunit
 dotnet test --logger "junit;LogFilePath=$(pwd)/reports/junit-report.xml"
 
 # 上传测试结果到 TestRail
-trcli -y -c "../../trcli-config.yml" parse_junit \
+trcli -y -c "../../../trcli-config.local.yml" parse_junit \
   --title "NUnit Playwright Automated Test Run" \
   -f "reports/junit-report.xml"
 ```

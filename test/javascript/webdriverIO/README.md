@@ -16,7 +16,7 @@ npm install
 npx wdio run wdio.conf.js
 
 # 上传测试结果到 TestRail
-trcli -y -c "../../trcli-config.yml" parse_junit \
+trcli -y -c "../../../trcli-config.local.yml" parse_junit \
   --title "WebdriverIO Automated Test Run" \
   -f "reports/webdriverio-test.xml"
 ```

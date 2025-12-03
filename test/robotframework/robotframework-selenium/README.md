@@ -14,7 +14,7 @@ pip install -r requirements.txt
 robot -d reports "./tests"
 
 # 上传测试结果到 TestRail
-trcli -y -c "../../trcli-config.yml" parse_robot \
+trcli -y -c "../../../trcli-config.local.yml" parse_robot \
   --title "Robot Framework Automated Test Run" \
   -f "reports/output.xml"
 ```

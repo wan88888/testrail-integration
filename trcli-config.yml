@@ -1,8 +1,4 @@
-# TestRail CLI 统一配置文件
-# 敏感信息请通过环境变量设置，不要直接填写在此文件中
-
-host: ${TESTRAIL_HOST}
-project: ${TESTRAIL_PROJECT}
-username: ${TESTRAIL_USERNAME}
-password: ${TESTRAIL_PASSWORD}
-
+host: https://wluffy.testrail.io
+project: test1
+username: wanyuan@atlasv.com
+password: Wan273479@
