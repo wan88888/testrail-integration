@@ -2,9 +2,6 @@
 
 ## 如何使用
 
-- 将 `trcli-config.yml` 中的占位符替换为你的 TestRail 实例信息
-- 执行以下命令
-
 ```sh
 # 安装 TestRail CLI
 pip install pipx
@@ -23,5 +20,7 @@ cd /Users/wan/Cursor/testrail-integration/test/dotnet/nunit
 dotnet test --logger "junit;LogFilePath=$(pwd)/reports/junit-report.xml"
 
 # 上传测试结果到 TestRail
-trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml"
+trcli -y -c "../../trcli-config.yml" parse_junit \
+  --title "NUnit Playwright Automated Test Run" \
+  -f "reports/junit-report.xml"
 ```

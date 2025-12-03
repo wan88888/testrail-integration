@@ -23,7 +23,9 @@ k6 run jsonplaceholder-test.js
 ## 上传测试结果到 TestRail
 
 ```sh
-trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml"
+trcli -y -c "../trcli-config.yml" parse_junit \
+  --title "K6 Performance Test Run" \
+  -f "reports/junit-report.xml"
 ```
 
 ## 测试用例命名规范

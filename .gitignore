@@ -34,6 +34,5 @@ NuGet/
 jmeter.log
 
 # ===== 敏感配置文件 =====
-trcli-config.yml
 .env
 .env.local

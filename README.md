@@ -5,30 +5,33 @@
 ## 项目结构
 
 ```
-test/
-├── python/                     # Python 测试框架
-│   └── pytest-selenium/        # Pytest + Selenium
-│
-├── javascript/                 # JavaScript 测试框架
-│   ├── playwright/             # Playwright
-│   ├── cypress/                # Cypress
-│   ├── webdriverio/            # WebdriverIO
-│   └── postman/                # Postman/Newman API 测试
-│
-├── java/                       # Java 测试框架
-│   ├── junit5-selenium/        # JUnit5 + Selenium
-│   ├── testng-selenium/        # TestNG + Selenium
-│   └── cucumber-selenium/      # Cucumber + Selenium
-│
-├── dotnet/                     # .NET 测试框架
-│   └── nunit/                  # NUnit + Playwright
-│
-├── robotframework/             # Robot Framework
-│   └── robotframework-selenium/
-│
-├── jmeter/                     # JMeter 性能测试
-│
-└── k6/                         # K6 性能测试
+testrail-integration/
+├── trcli-config.yml            # 统一的 TestRail CLI 配置文件
+├── .env.example                # 环境变量示例
+└── test/
+    ├── python/                 # Python 测试框架
+    │   └── pytest-selenium/    # Pytest + Selenium
+    │
+    ├── javascript/             # JavaScript 测试框架
+    │   ├── playwright/         # Playwright
+    │   ├── cypress/            # Cypress
+    │   ├── webdriverio/        # WebdriverIO
+    │   └── postman/            # Postman/Newman API 测试
+    │
+    ├── java/                   # Java 测试框架
+    │   ├── junit5-selenium/    # JUnit5 + Selenium
+    │   ├── testng-selenium/    # TestNG + Selenium
+    │   └── cucumber-selenium/  # Cucumber + Selenium
+    │
+    ├── dotnet/                 # .NET 测试框架
+    │   └── nunit/              # NUnit + Playwright
+    │
+    ├── robotframework/         # Robot Framework
+    │   └── robotframework-selenium/
+    │
+    ├── jmeter/                 # JMeter 性能测试
+    │
+    └── k6/                     # K6 性能测试
 ```
 
 ## 快速开始
@@ -44,14 +47,30 @@ pipx install trcli
 
 ### 2. 配置 TestRail 连接
 
-每个子项目都包含一个 `trcli-config.yml` 配置文件，需要将其中的占位符替换为你的 TestRail 实例信息：
+1. 复制环境变量示例文件：
 
-```yaml
-host: https://your-instance.testrail.io
-username: your-email@example.com
-key: your-api-key
-project: Your Project Name
+```sh
+cp .env.example .env
 ```
+
+2. 编辑 `.env` 文件，填写你的 TestRail 实例信息：
+
+```sh
+TESTRAIL_HOST=https://your-instance.testrail.io
+TESTRAIL_PROJECT=Your Project Name
+TESTRAIL_USERNAME=your-email
+TESTRAIL_PASSWORD=your-password
+```
+
+3. 加载环境变量：
+
+```sh
+source .env
+# 或者使用 export 逐个设置
+export TESTRAIL_HOST=https://your-instance.testrail.io
+```
+
+> **提示**：可以使用密码或 API Key（在 TestRail 中通过 "My Settings" > "API Keys" 获取）
 
 ### 3. 选择示例项目
 
@@ -77,11 +96,16 @@ project: Your Project Name
 无论使用哪种测试框架，基本工作流都是：
 
 ```sh
-# 1. 运行测试并生成 JUnit XML 报告
+# 1. 确保环境变量已配置
+source .env
+
+# 2. 运行测试并生成 JUnit XML 报告
 <运行测试的命令>
 
-# 2. 使用 trcli 上传结果到 TestRail
-trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml"
+# 3. 使用 trcli 上传结果到 TestRail
+trcli -y -c "trcli-config.yml" parse_junit \
+  --title "Your Test Run Title" \
+  -f "reports/junit-report.xml"
 ```
 
 ## 相关资源

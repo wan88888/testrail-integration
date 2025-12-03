@@ -8,9 +8,6 @@
 
 ## 如何使用
 
-- 将 `trcli-config.yml` 中的占位符替换为你的 TestRail 实例信息
-- 执行以下命令
-
 ```sh
 # 安装 Newman CLI
 npm install -g newman
@@ -23,5 +20,7 @@ pipx install trcli
 newman run api-test.json -r cli,junit --reporter-junit-export ./reports/newman_junit.xml
 
 # 上传测试结果到 TestRail
-trcli -y -c "trcli-config.yml" parse_junit -f "reports/newman_junit.xml"
+trcli -y -c "../../trcli-config.yml" parse_junit \
+  --title "Postman Automated Test Run" \
+  -f "reports/newman_junit.xml"
 ```

@@ -2,9 +2,6 @@
 
 ## 如何使用
 
-- 将 `trcli-config.yml` 中的占位符替换为你的 TestRail 实例信息
-- 执行以下命令
-
 ```sh
 # 安装 TestRail CLI
 pip install pipx
@@ -17,5 +14,7 @@ pip install -r requirements.txt
 robot -d reports "./tests"
 
 # 上传测试结果到 TestRail
-trcli -y -c "trcli-config.yml" parse_robot -f "reports/output.xml"
+trcli -y -c "../../trcli-config.yml" parse_robot \
+  --title "Robot Framework Automated Test Run" \
+  -f "reports/output.xml"
 ```
