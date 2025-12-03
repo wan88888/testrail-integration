@@ -1,20 +1,21 @@
-# Robot Framework sample project
+# Robot Framework 示例项目
 
-## How to use the project
+## 如何使用
 
-- Replace the placeholders in `trcli-config.yml` with your TestRail instance details
-- Execute the commands on the script below
+- 将 `trcli-config.yml` 中的占位符替换为你的 TestRail 实例信息
+- 执行以下命令
 
 ```sh
-# Install TR CLI
-pip install trcli
+# 安装 TestRail CLI
+pip install pipx
+pipx install trcli
 
-# Install test project
+# 安装项目依赖
 pip install -r requirements.txt
 
-# Run tests
+# 运行测试
 robot -d reports "./tests"
 
-# Upload test results
+# 上传测试结果到 TestRail
 trcli -y -c "trcli-config.yml" parse_robot -f "reports/output.xml"
 ```

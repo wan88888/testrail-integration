@@ -1,25 +1,27 @@
-# NUnit SauceDemo Login Test Project
+# NUnit 示例项目
 
-## How to use the project
+## 如何使用
 
-- Replace the placeholders in `trcli-config.yml` with your TestRail instance details
-- Execute the commands on the script below
+- 将 `trcli-config.yml` 中的占位符替换为你的 TestRail 实例信息
+- 执行以下命令
 
 ```sh
-# Install TR CLI
-pip install trcli
+# 安装 TestRail CLI
+pip install pipx
+pipx install trcli
 
-# Install test project
+# 还原依赖并编译项目
 dotnet restore
 dotnet build
 
-# Install Playwright browsers
-pwsh SauceTest/bin/Debug/net8.0/playwright.ps1 install
-# Or use: npx playwright install
+# 安装 Playwright 浏览器
+cd SauceTest/bin/Debug/net8.0/.playwright
+./node/darwin-arm64/node ./package/cli.js install chromium
 
-# Run tests
+# 运行测试
+cd /Users/wan/Cursor/testrail-integration/test/dotnet/nunit
 dotnet test --logger "junit;LogFilePath=$(pwd)/reports/junit-report.xml"
 
-# Upload test results
+# 上传测试结果到 TestRail
 trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml"
 ```

@@ -1,27 +1,21 @@
-# Playwright sample project
+# Playwright 示例项目
 
-## How to use the project
+## 如何使用
 
-- Replace the placeholders in `trcli-config.yml` with your TestRail instance details
-- Execute the commands on the script below
+- 将 `trcli-config.yml` 中的占位符替换为你的 TestRail 实例信息
+- 执行以下命令
 
 ```sh
-# Install TR CLI
-pip install trcli
+# 安装 TestRail CLI
+pip install pipx
+pipx install trcli
 
-# Install test project
+# 安装项目依赖
 npm install
 
-# Run tests
+# 运行测试
 npx playwright test
 
-# Upload test results
+# 上传测试结果到 TestRail
 trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml"
 ```
-
-## How to use the project with Azure Pipelines
-
-- Substitute the placeholders within the `azure-pipelines.yml` file with the specific information related to your TestRail instance and credentials.
-- Establish a connection between the project and Azure DevOps, and initiate the pipeline.
-- Azure DevOps will automatically detect the `azure-pipelines.yml`
-- During the pipeline execution, Playwright tests will be conducted, and the results will be uploaded to TestRail.

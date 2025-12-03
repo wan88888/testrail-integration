@@ -1,26 +1,25 @@
-# JMeter TestRail integration sample project
+# JMeter TestRail 集成示例项目
 
-## Pre-requisites for running the tests in the project
+## 环境要求
 
-You need to install the following on your local machine:
-- JMeter 
-- JUnit Pluggin
-- Python3 
+本地机器需要安装以下工具：
+- JMeter
+- JUnit Reporter
+- Python3
 
-## How to upload the test results to TestRail from your local machine
+## 如何使用
 
-- Replace the placeholders in `trcli-config.yml` with your TestRail instance details
-- Execute the commands on the script below
+- 将 `trcli-config.yml` 中的占位符替换为你的 TestRail 实例信息
+- 执行以下命令
 
 ```sh
+# 安装 TestRail CLI
+pip install pipx
+pipx install trcli
 
-# Install the TestRail CLI
-pip install trcli
-
-# Run Tests (JUnitReporter 插件会自动生成 junit-results.xml)
+# 运行测试
 jmeter -n -t test.jmx
 
-# Upload JMeter Test Results to TestRail
+# 上传测试结果到 TestRail
 trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-results.xml"
-
 ```

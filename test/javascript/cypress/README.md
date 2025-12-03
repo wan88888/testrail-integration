@@ -1,25 +1,22 @@
-# Cypress code-first sample project
+# Cypress 示例项目
 
-This project is using a code-first workflow. This is the approach you should use if you want your test cases to be automatically created in TestRail and not worry about mapping them manually. Using this approach, you don't need to do any modifications to the way you usually write your automated test cases. You can see sample tests in the `cypress/e2e/todo_app` folder. 
+## 如何使用
 
-## How to use the project
-
-Before executing the script, replace the placeholders in `trcli-config.yml` with your TestRail instance details.
-
-Notice the `-y` option on the script below. This will allow all test entities to be automatically created.
+- 将 `trcli-config.yml` 中的占位符替换为你的 TestRail 实例信息
+- 注意：下面脚本中的 `-y` 选项会自动创建所有测试实体
 
 ```sh
-# Install TR CLI
-pip install trcli
+# 安装 TestRail CLI
+pip install pipx
+pipx install trcli
 
-# Install test project
+# 安装项目依赖
 npm install
 
-# Run tests
+# 运行测试
 npx cypress run
 
-# Upload test results
-# With TestRail CLI version 1.6.0, the report path now supports wildcards, allowing you to merge multiple reports seamlessly.
-
+# 上传测试结果到 TestRail
+# TestRail CLI 1.6.0 版本支持通配符路径，可以无缝合并多个报告
 trcli -y -c "trcli-config.yml" parse_junit -f "reports/*.xml"
 ```

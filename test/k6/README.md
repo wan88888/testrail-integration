@@ -1,24 +1,26 @@
-# K6 TestRail Integration
-TestRail Integration With [K6](https://k6.io/)
+# K6 TestRail 集成示例项目
 
-## 安装依赖
+## 环境要求
 
 ```sh
 # macOS
 brew install k6
-
-# 或其他系统参考: https://k6.io/docs/get-started/installation/
 ```
 
-## 执行测试
+## 如何使用
 
 ```sh
+# 安装 TestRail CLI
+pip install pipx
+pipx install trcli
+
+# 运行测试
 k6 run jsonplaceholder-test.js
 ```
 
 > 测试完成后会自动生成 `reports/junit-report.xml`
 
-## 上传结果到 TestRail
+## 上传测试结果到 TestRail
 
 ```sh
 trcli -y -c "trcli-config.yml" parse_junit -f "reports/junit-report.xml"
