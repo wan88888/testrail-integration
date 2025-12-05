@@ -1,0 +1,4 @@
+host: https://your-instance.testrail.io
+project: your-project-name
+username: your-email
+password: your-password

@@ -29,6 +29,15 @@ bin/
 obj/
 NuGet/
 
+# ===== Playwright =====
+.playwright/
+playwright-report/
+test-results/
+
+# ===== Cypress =====
+cypress/videos/
+cypress/screenshots/
+
 # ===== 日志 =====
 *.log
 jmeter.log
@@ -36,7 +45,8 @@ jmeter.log
 # ===== 敏感配置文件 =====
 .env
 .env.local
-trcli-config.yml
+config.yml
 
 # ===== 测试报告 =====
 reports/
+surefire-reports/

@@ -4,8 +4,8 @@
 
 ```sh
 # 安装 TestRail CLI
-pip install pipx
-pipx install trcli
+git clone https://github.com/wan88888/testrail-integration.git
+cd test/javascript/playwright
 
 # 安装项目依赖
 npm install
@@ -14,7 +14,5 @@ npm install
 npx playwright test
 
 # 上传测试结果到 TestRail
-trcli -y -c "../../../trcli-config.local.yml" parse_junit \
-  --title "Playwright Automated Test Run" \
-  -f "reports/junit-report.xml"
+trcli -y -c ~/config.yml parse_junit --title "Playwright Automated Test" -f "reports/junit-report.xml"   
 ```

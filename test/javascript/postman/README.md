@@ -9,18 +9,15 @@
 ## 如何使用
 
 ```sh
+git clone https://github.com/wan88888/testrail-integration.git
+cd test/javascript/postman
+
 # 安装 Newman CLI
 npm install -g newman
-
-# 安装 TestRail CLI
-pip install pipx
-pipx install trcli
 
 # 运行测试
 newman run api-test.json -r cli,junit --reporter-junit-export ./reports/newman_junit.xml
 
 # 上传测试结果到 TestRail
-trcli -y -c "../../../trcli-config.local.yml" parse_junit \
-  --title "Postman Automated Test Run" \
-  -f "reports/newman_junit.xml"
+trcli -y -c ~/config.yml parse_junit --title "Postman Automated Test" -f "reports/newman_junit.xml"  
 ```
