@@ -4,24 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.idera.testrail.tests.junit5</groupId>
-    <artifactId>java-junit5</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <parent>
+        <groupId>com.testrail.integration</groupId>
+        <artifactId>java-selenium-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.release>11</maven.compiler.release>
-    </properties>
+    <artifactId>junit5-selenium</artifactId>
+    <name>JUnit5 Selenium Tests</name>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
                 <configuration>
-                    <encoding>UTF-8</encoding>
                     <compilerArgs>
                         <arg>-parameters</arg>
                     </compilerArgs>
@@ -31,10 +28,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
                 <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <disableXmlReport>false</disableXmlReport>
                     <reportsDirectory>${project.basedir}/reports</reportsDirectory>
                     <statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
                         <usePhrasedFileName>false</usePhrasedFileName>
@@ -42,21 +36,15 @@
                         <usePhrasedTestCaseClassName>false</usePhrasedTestCaseClassName>
                         <usePhrasedTestCaseMethodName>false</usePhrasedTestCaseMethodName>
                     </statelessTestsetReporter>
-                    <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoReporter">
-                        <usePhrasedFileName>false</usePhrasedFileName>
-                    </statelessTestsetInfoReporter>
                     <systemPropertyVariables>
                         <java.util.logging.config.file>${project.basedir}/src/test/resources/logging.properties</java.util.logging.config.file>
                     </systemPropertyVariables>
-                    <properties>
-                        <trimStackTrace>true</trimStackTrace>
-                    </properties>
                 </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
                         <artifactId>surefire-junit-platform</artifactId>
-                        <version>3.2.5</version>
+                        <version>${maven-surefire-plugin.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -64,7 +52,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>clean-and-rename-reports</id>
@@ -74,20 +61,17 @@
                         </goals>
                         <configuration>
                             <target>
-                                <!-- Use XSLT to clean the XML report (remove properties and system output) -->
                                 <xslt basedir="${project.basedir}/reports"
                                       destdir="${project.basedir}/reports/clean"
                                       includes="TEST-*.xml"
                                       extension=".xml"
                                       style="${project.basedir}/src/test/resources/clean-report.xslt"/>
-                                <!-- Move cleaned file to final location -->
                                 <move todir="${project.basedir}/reports" includeemptydirs="false">
                                     <fileset dir="${project.basedir}/reports/clean">
                                         <include name="*.xml"/>
                                     </fileset>
                                     <mapper type="merge" to="junit-report.xml"/>
                                 </move>
-                                <!-- Clean up temp directory and txt files -->
                                 <delete dir="${project.basedir}/reports/clean"/>
                                 <delete>
                                     <fileset dir="${project.basedir}/reports">
@@ -102,44 +86,23 @@
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.10.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
-        </dependency>
-        <dependency>
-            <groupId>com.testrail</groupId>
-            <artifactId>testrail-junit-extensions</artifactId>
-            <version>0.1.0</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.junit.platform</groupId>
-                    <artifactId>junit-platform-runner</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.27.0</version>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.9.2</version>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -26,7 +26,7 @@ testrail-integration/
     │   └── nunit/              # NUnit + Playwright
     │
     ├── robotframework/         # Robot Framework
-    │   └── robotframework-selenium/
+    │   └── selenium/
     │
     ├── jmeter/                 # JMeter 性能测试
     │
@@ -76,7 +76,7 @@ password: your-password
 | **TestNG** | [test/java/testng-selenium](test/java/testng-selenium) | Java Selenium 测试 |
 | **Cucumber** | [test/java/cucumber-selenium](test/java/cucumber-selenium) | BDD 风格测试 |
 | **NUnit** | [test/dotnet/nunit](test/dotnet/nunit) | .NET Playwright 测试 |
-| **Robot Framework** | [test/robotframework/robotframework-selenium](test/robotframework/robotframework-selenium) | 关键字驱动测试 |
+| **Robot Framework** | [test/robotframework/selenium](test/robotframework/selenium) | 关键字驱动测试 |
 | **JMeter** | [test/jmeter](test/jmeter) | 性能测试集成 |
 | **K6** | [test/k6](test/k6) | 现代化性能测试 |
 

@@ -2,13 +2,18 @@
   "name": "playwright-testrail-sample",
   "version": "1.0.0",
   "description": "Playwright sample project with TestRail integration",
+  "license": "MIT",
   "scripts": {
+    "postinstall": "npx playwright install",
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",
-    "test:debug": "npx playwright test --debug"
+    "test:debug": "npx playwright test --debug",
+    "test:ui": "npx playwright test --ui"
   },
   "devDependencies": {
-    "@playwright/test": "^1.40.0"
+    "@playwright/test": "^1.49.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
-

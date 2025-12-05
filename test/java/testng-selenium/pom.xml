@@ -4,33 +4,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.idera.testrail.tests.testng</groupId>
-    <artifactId>java-testng</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <parent>
+        <groupId>com.testrail.integration</groupId>
+        <artifactId>java-selenium-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
+    <artifactId>testng-selenium</artifactId>
+    <name>TestNG Selenium Tests</name>
+
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0</version>
                 <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <disableXmlReport>false</disableXmlReport>
                     <reportsDirectory>${project.basedir}/reports</reportsDirectory>
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
@@ -50,7 +42,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>clean-and-rename-reports</id>
@@ -60,27 +51,21 @@
                         </goals>
                         <configuration>
                             <target>
-                                <!-- Move JUnit XML report to final location -->
                                 <move todir="${project.basedir}/reports" includeemptydirs="false" failonerror="false">
                                     <fileset dir="${project.basedir}/reports/junitreports">
                                         <include name="TEST-*.xml"/>
                                     </fileset>
                                     <mapper type="merge" to="junit-report.xml"/>
                                 </move>
-                                <!-- Clean up unnecessary files and directories -->
                                 <delete dir="${project.basedir}/reports/junitreports" failonerror="false"/>
-                                <delete dir="${project.basedir}/reports/old" failonerror="false"/>
-                                <delete dir="${project.basedir}/reports/TestRail suite" failonerror="false"/>
                                 <delete failonerror="false">
                                     <fileset dir="${project.basedir}/reports">
                                         <include name="*.html"/>
                                         <include name="*.css"/>
                                         <include name="*.js"/>
                                         <include name="*.png"/>
-                                        <include name="*.gif"/>
                                         <include name="*.txt"/>
                                         <include name="testng-results.xml"/>
-                                        <include name="TEST-TestSuite.xml"/>
                                     </fileset>
                                 </delete>
                             </target>
@@ -90,29 +75,23 @@
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.7.0</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.27.0</version>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.9.2</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>2.0.9</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

@@ -58,3 +58,4 @@ Take Screenshot And Report
 Close Test Browser
     Run Keyword If    '${TEST_STATUS}' != 'PASS'    Take Screenshot And Report
     Close Browser
+

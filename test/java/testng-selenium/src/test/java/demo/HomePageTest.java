@@ -1,106 +1,67 @@
 package demo;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import demo.driver.DriverManager;
+import demo.pages.InventoryPage;
+import demo.pages.LoginPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-
+/**
+ * Test cases for SauceDemo login and home page functionality
+ * Uses Page Object Model pattern for better maintainability
+ */
 public class HomePageTest {
 
-    public static WebDriver driver;
-    public static WebDriverWait wait;
+    private LoginPage loginPage;
 
     @BeforeMethod
-    void setup() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless");
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--window-size=1920,1080");
-        options.addArguments("--start-maximized");
-        options.addArguments("--no-proxy-server");
-        options.addArguments("disable-infobars");
-        options.addArguments("--disable-web-security");
-        options.addArguments("--allow-running-insecure-content");
-        options.addArguments("--ignore-certificate-errors");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        driver = new ChromeDriver(options);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        // Navigate to SauceDemo website
-        driver.navigate().to("https://www.saucedemo.com");
-    }
-
-    @Test
-    public void verifyLoginPageTitle() {
-        // Verify the login page title
-        assertTrue(driver.getTitle().contains("Swag Labs"));
-    }
-
-    @Test
-    public void verifySuccessfulLoginWithValidCredentials() {
-        // Enter username
-        WebElement usernameField = driver.findElement(By.id("user-name"));
-        usernameField.sendKeys("standard_user");
-
-        // Enter password
-        WebElement passwordField = driver.findElement(By.id("password"));
-        passwordField.sendKeys("secret_sauce");
-
-        // Click login button
-        WebElement loginButton = driver.findElement(By.id("login-button"));
-        loginButton.click();
-
-        // Wait for products page to load
-        wait.until(ExpectedConditions.urlContains("inventory.html"));
-
-        // Verify we are on the products page
-        WebElement productsTitle = wait.until(
-            ExpectedConditions.visibilityOfElementLocated(By.className("title"))
-        );
-        assertTrue(productsTitle.isDisplayed());
-        assertEquals(productsTitle.getText(), "Products");
-    }
-
-    @Test
-    public void verifyProductsDisplayedAfterLogin() {
-        // Login with valid credentials
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        driver.findElement(By.id("login-button")).click();
-
-        // Wait for products page to load
-        wait.until(ExpectedConditions.urlContains("inventory.html"));
-
-        // Verify that products are displayed
-        WebElement inventoryList = wait.until(
-            ExpectedConditions.visibilityOfElementLocated(By.className("inventory_list"))
-        );
-        assertTrue(inventoryList.isDisplayed());
-
-        // Verify there are products in the list
-        int productCount = driver.findElements(By.className("inventory_item")).size();
-        assertTrue(productCount > 0, "At least one product should be displayed");
+    public void setUp() {
+        DriverManager.initDriver();
+        loginPage = new LoginPage().open();
     }
 
     @AfterMethod
-    void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+    public void tearDown() {
+        DriverManager.quitDriver();
+    }
+
+    @Test(description = "Verify login page title contains 'Swag Labs'")
+    public void verifyLoginPageTitle() {
+        assertTrue(loginPage.getTitle().contains("Swag Labs"),
+            "Page title should contain 'Swag Labs'");
+    }
+
+    @Test(description = "Verify successful login with valid credentials")
+    public void verifySuccessfulLoginWithValidCredentials() {
+        // Login using Page Object
+        InventoryPage inventoryPage = loginPage.loginAsStandardUser();
+
+        // Verify successful login
+        assertTrue(inventoryPage.isPageLoaded(), "Should be redirected to inventory page");
+        assertTrue(inventoryPage.isTitleDisplayed(), "Products title should be displayed");
+        assertEquals(inventoryPage.getPageTitle(), "Products", "Page title should be 'Products'");
+    }
+
+    @Test(description = "Verify products are displayed after login")
+    public void verifyProductsDisplayedAfterLogin() {
+        // Login using Page Object
+        InventoryPage inventoryPage = loginPage.loginAsStandardUser();
+
+        // Verify products are displayed
+        assertTrue(inventoryPage.isInventoryListDisplayed(), "Inventory list should be displayed");
+        assertTrue(inventoryPage.hasProducts(), "At least one product should be displayed");
+    }
+
+    @Test(description = "Verify login page elements are displayed")
+    public void verifyLoginPageElements() {
+        assertTrue(loginPage.isUsernameFieldDisplayed(), "Username field should be displayed");
+        assertTrue(loginPage.isPasswordFieldDisplayed(), "Password field should be displayed");
+        assertTrue(loginPage.isLoginButtonDisplayed(), "Login button should be displayed");
+        assertTrue(loginPage.isLogoDisplayed(), "Logo should be displayed");
+        assertEquals(loginPage.getLogoText(), "Swag Labs", "Logo text should be 'Swag Labs'");
     }
 }

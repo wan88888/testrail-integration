@@ -1,10 +1,16 @@
 # Robot Framework 示例项目
 
+## 环境要求
+
+本地机器需要安装以下工具：
+- Python3
+- Chrome 浏览器
+
 ## 如何使用
 
 ```sh
 git clone https://github.com/wan88888/testrail-integration.git
-cd test/robotframework/robotframework-selenium
+cd test/robotframework/selenium
 
 # 安装项目依赖
 python3 -m venv venv
@@ -15,5 +21,6 @@ pip install -r requirements.txt
 robot -d reports "./tests"
 
 # 上传测试结果到 TestRail
-trcli -y -c ~/config.yml parse_junit --title "Robot Framework Automated Test" -f "reports/output.xml"   
+trcli -y -c ~/config.yml parse_junit --title "Robot Framework Automated Test" -f "reports/output.xml"
 ```
+
