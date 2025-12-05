@@ -18,8 +18,6 @@ npm install
 
 # 运行测试（无头模式）
 npm test
-或者
-npx cypress run
 
 # 运行测试（有头模式，可视化）
 npm run test:headed
